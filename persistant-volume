@@ -1,0 +1,19 @@
+Run the Workspace with Conda Installed: Ensure the workspace you are running has Conda installed. 
+
+Create a Conda Environment: Use the following command to create a Conda environment. This environment will be mounted under the PVC.
+
+conda create -p /home/local/data/env/ray python=3.10 -y
+
+Activate the Conda Environment: Activate the environment you just created.
+conda activate /home/local/data/env/ray
+
+Install Required Packages: Install the necessary Python packages in the activated environment.
+
+pip install transformers fastapi torch ray[all] requests ipykernel
+
+Add the Environment to Jupyter: Add the Conda environment to Jupyter so it can be selected from the Jupyter interface.
+
+python -m ipykernel install --user --name ray --display-name "ray"
+
+Accessing the Environment in a New Container: Whenever you access a new container and want to use the created environment, ensure the workspace mounts the PVC and activate the environment using:
+conda activate /home/local/data/env/ray
