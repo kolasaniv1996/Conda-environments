@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jlab
+  namespace: runai-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jlab
+  template:
+    metadata:
+      labels:
+        app: jlab
+    spec:
+      securityContext:
+        runAsUser: 0
+        runAsGroup: 0
+      containers:
+        - name: jupyter
+          image: docker.io/vivekkolasani1996/conda:v1
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: HOME
+              value: /home/local/data
+            - name: JUPYTER_RUNTIME_DIR
+              value: /home/local/data/.jupyter_runtime
+            - name: JUPYTER_DATA_DIR
+              value: /home/local/data/.jupyter
+            - name: CONDA_ENVS_PATH
+              value: /home/local/data/conda-envs
+            - name: CONDA_PKGS_DIRS
+              value: /home/local/data/conda-pkgs
+          workingDir: /home/local/data
+          command: ["jupyter-lab"]
+          args:
+            - "--NotebookApp.token=''"
+            - "--ServerApp.allow_remote_access=true"
+            - "--allow-root"
+            - "--port=8888"
+            - "--no-browser"
+            - "--NotebookApp.notebook_dir=/home/local/data"
+          ports:
+            - containerPort: 8888
+              name: http
+          volumeMounts:
+            - name: data
+              mountPath: /home/local/data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: test-vivek-env-1761930180-ws2va
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jlab
+  namespace: runai-test
+spec:
+  selector:
+    app: jlab
+  ports:
+    - name: http
+      port: 8888
+      targetPort: 8888
+  type: ClusterIP
