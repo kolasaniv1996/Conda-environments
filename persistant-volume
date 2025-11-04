@@ -13,7 +13,7 @@ pip install ray[all] ipykernel
 
 Add the Environment to Jupyter: Add the Conda environment to Jupyter so it can be selected from the Jupyter interface.
 
-python -m ipykernel install --user --name ray --display-name "ray"
+python -m ipykernel install --user --name demo --display-name "demo"
 
 Accessing the Environment in a New Container: Whenever you access a new container and want to use the created environment, ensure the workspace mounts the PVC and activate the environment using:
 conda activate /home/local/data/env/ray
