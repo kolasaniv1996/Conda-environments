@@ -16,4 +16,4 @@ Add the Environment to Jupyter: Add the Conda environment to Jupyter so it can b
 python -m ipykernel install --user --name demo --display-name "demo"
 
 Accessing the Environment in a New Container: Whenever you access a new container and want to use the created environment, ensure the workspace mounts the PVC and activate the environment using:
-conda activate /home/local/data/env/ray
+conda activate /home/local/data/env/demo
