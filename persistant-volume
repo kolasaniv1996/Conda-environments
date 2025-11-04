@@ -9,7 +9,7 @@ conda activate /home/local/data/env/ray
 
 Install Required Packages: Install the necessary Python packages in the activated environment.
 
-pip install transformers fastapi torch ray[all] requests ipykernel
+pip install ray[all] ipykernel  
 
 Add the Environment to Jupyter: Add the Conda environment to Jupyter so it can be selected from the Jupyter interface.
 
